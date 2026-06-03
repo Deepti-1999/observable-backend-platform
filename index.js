@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const client = require("prom-client");	
+const logger = require("./logger");
 
 const app = express();
 app.use(express.json());
@@ -32,6 +33,11 @@ app.use((req, res, next) => {
     });
 
     end({
+      method: req.method,
+      route: req.route ? req.route.path : req.path,
+      status: res.statusCode
+    });
+    logger.info({
       method: req.method,
       route: req.route ? req.route.path : req.path,
       status: res.statusCode
