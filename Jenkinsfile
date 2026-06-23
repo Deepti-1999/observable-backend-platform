@@ -5,8 +5,8 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo 'Building Application'
-                sh 'pwd'
+                echo 'Installing Dependencies'
+                sh 'npm install'
             }
         }
 
