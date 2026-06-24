@@ -123,3 +123,4 @@ const PORT = 4000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+// Day-03 Auto Trigger Test
