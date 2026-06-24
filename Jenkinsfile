@@ -20,8 +20,21 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo 'Deployment Stage'
-                sh 'date'
+                echo 'Restarting Application'
+
+                sh '''
+                pm2 restart backend-app || pm2 start index.js --name backend-app
+                '''
+            }
+        }
+
+        stage('Health Check') {
+            steps {
+                echo 'Checking Application Health'
+
+                sh '''
+                curl http://localhost:4000/health
+                '''
             }
         }
     }
