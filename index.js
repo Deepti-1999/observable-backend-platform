@@ -49,7 +49,10 @@ app.use((req, res, next) => {
 
 // Health endpoint
 app.get("/health", (req, res) => {
-  res.json({ status: "OK" });
+  res.json({
+    status: "OK",
+    version: "2.0"
+});
 });
 
 // Create user
