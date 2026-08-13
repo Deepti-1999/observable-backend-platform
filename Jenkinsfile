@@ -33,7 +33,17 @@ pipeline {
                 echo 'Checking Application Health'
 
                 sh '''
-                    curl http://localhost:4000/health
+                    for i in {1..10}; do
+                        if curl -sf http://localhost:4000/health; then
+                           exit 0
+                        fi
+
+                        echo "Application not ready yet. Retrying..."
+                        sleep 2
+                    done
+
+                    echo "Application failed health check"
+                    exit 1
                 '''
             }
         }
