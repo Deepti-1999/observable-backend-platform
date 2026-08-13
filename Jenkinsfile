@@ -23,8 +23,7 @@ pipeline {
                 echo 'Deploying Application'
 
                 sh '''
-                    rsync -r --delete --exclude='.git' --no-owner --no-group --no-times ./ /home/hfer/backend-app-runtime/
-                    sudo -u hfer /usr/bin/pm2 restart backend-app
+                    sudo -n -u hfer /home/hfer/deploy-backend.sh
                 '''
             }
         }
