@@ -20,10 +20,12 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo 'Restarting Application'
+                echo 'Deploying Application'
 
                 sh '''
-                pm2 restart backend-app || pm2 start index.js --name backend-app
+                    rm -rf /home/hfer/backend-app-runtime/*
+                    cp -a . /home/hfer/backend-app-runtime/
+                    sudo -u hfer /usr/bin/pm2 restart backend-app
                 '''
             }
         }
@@ -33,7 +35,7 @@ pipeline {
                 echo 'Checking Application Health'
 
                 sh '''
-                curl http://localhost:4000/health
+                    curl http://localhost:4000/health
                 '''
             }
         }
