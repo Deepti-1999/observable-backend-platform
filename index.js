@@ -51,7 +51,7 @@ app.use((req, res, next) => {
 app.get("/health", (req, res) => {
   res.json({
     status: "OK",
-    version: "2.0"
+    version: "2.1"
 });
 });
 
