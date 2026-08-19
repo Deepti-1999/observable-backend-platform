@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    environment {
+        APP_NAME = 'backend-app'
+        APP_PORT = '4000'
+        DEPLOY_DIR = '/home/hfer/backend-app-runtime'
+    }
     stages {
 
         stage('Build') {
@@ -23,7 +28,7 @@ pipeline {
                 echo 'Deploying Application'
 
                 sh '''
-                    sudo -n -u hfer /home/hfer/deploy-backend.sh
+                    sudo -n -u hfer /home/hfer/deploy-backend.sh "$WORKSPACE" "$DEPLOY_DIR" "$APP_NAME"
                 '''
             }
         }
@@ -34,7 +39,7 @@ pipeline {
 
                 sh '''
                     for i in $(seq 1 15); do
-                        if curl -sf http://localhost:4000/health; then
+                        if curl -sf http://localhost:$APP_PORT/health; then
                            echo "Application is healthy"
                            exit 0
                         fi
