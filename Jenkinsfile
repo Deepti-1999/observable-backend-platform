@@ -1,15 +1,26 @@
 pipeline {
     agent any
 
+    parameters {
+        choice(
+            name: 'ENVIRONMENT',
+            choices: ['dev', 'staging'],
+            description: 'Select deployment environment'
+        )
+    }
+
     environment {
         APP_NAME = 'backend-app'
         APP_PORT = '4000'
         DEPLOY_DIR = '/home/hfer/backend-app-runtime'
+        DEPLOY_ENV = "${params.ENVIRONMENT}"
     }
+
     stages {
 
         stage('Build') {
             steps {
+                echo "Deployment Environment: ${DEPLOY_ENV}"
                 echo 'Installing Dependencies'
                 sh 'npm install'
             }
