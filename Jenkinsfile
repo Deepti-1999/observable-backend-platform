@@ -21,6 +21,18 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Deployment Environment: ${DEPLOY_ENV}"
+
+                withCredentials([
+                    string(
+                       credentialsId: 'backend-demo-secret',
+                       variable: 'DEMO_SECRET'
+                    )
+                )] {
+                    sh '''
+	               echo "Credential is available to the pipeline"
+                       echo "Secret length: ${#DEMO_SECRET}"
+                    '''
+                }
                 echo 'Installing Dependencies'
                 sh 'npm install'
             }
