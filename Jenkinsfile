@@ -27,7 +27,7 @@ pipeline {
                        credentialsId: 'backend-demo-secret',
                        variable: 'DEMO_SECRET'
                     )
-                )] {
+                ]) {
                     sh '''
 	               echo "Credential is available to the pipeline"
                        echo "Secret length: ${#DEMO_SECRET}"
