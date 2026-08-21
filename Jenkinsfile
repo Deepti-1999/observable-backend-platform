@@ -12,7 +12,7 @@ pipeline {
     environment {
         APP_NAME = 'backend-app'
         APP_PORT = '4000'
-        DEPLOY_DIR = '/home/hfer/backend-app-runtime'
+        DEPLOY_DIR = "${params.ENVIRONMENT == 'dev' ? '/home/hfer/backend-app-runtime-dev' : '/home/hfer/backend-app-runtime-staging'}"
         DEPLOY_ENV = "${params.ENVIRONMENT}"
     }
 
