@@ -108,10 +108,11 @@ app.get("/metrics", async (req, res) => {
 });
 
 // DB connection
-mongoose.connect("mongodb://127.0.0.1:27017/testdb")
-  .then(() => console.log("DB connected"))
-  .catch(err => console.error("DB error:", err.message));
-
+if (process.env.NODE_ENV !== "test") {
+  mongoose.connect("mongodb://127.0.0.1:27017/testdb")
+    .then(() => console.log("DB connected"))
+    .catch(err => console.error("DB error:", err.message));
+}
 // User Schema
 
 const UserSchema = new mongoose.Schema({
@@ -121,9 +122,14 @@ const UserSchema = new mongoose.Schema({
 
 const User = mongoose.model("User", UserSchema);
 
-// Start server
+// Start server only when run directly
 const PORT = 4000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
+
+module.exports = app;
 // Day-03 Auto Trigger Test

@@ -43,6 +43,7 @@ pipeline {
                 echo 'Checking Node Version'
                 sh 'node -v'
                 sh 'npm -v'
+                sh 'NODE_ENV=test npm test'
             }
         }
 
